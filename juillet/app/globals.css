@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.section-title {
+  @apply text-[30px] font-raleway font-semibold text-center;
+}
+.section-title--sub {
+  @apply text-[16px]  mb-10 max-w-md text-text-light leading-7 text-center;
+}
+.btn-primary {
+  @apply bg-black text-white px-6 py-2 rounded hover:bg-gray-800;
+}
