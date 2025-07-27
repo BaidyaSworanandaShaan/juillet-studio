@@ -18,6 +18,8 @@ export async function generateStaticParams() {
     id: product.id.toString(),
   }));
 }
+const API_URL =
+  process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
 const ProductPage = async ({ params }: Props) => {
   const productId = parseInt(params.id);
   const product = await fetchProductById(productId);
@@ -29,9 +31,7 @@ const ProductPage = async ({ params }: Props) => {
     product.attributes;
 
   const imageUrls =
-    images?.data?.map(
-      (img: any) => `http://localhost:1337${img.attributes.url}`
-    ) || [];
+    images?.data?.map((img: any) => `${API_URL}${img.attributes.url}`) || [];
 
   if (!product) {
     return <div className="p-4 text-red-600">Product not found</div>;

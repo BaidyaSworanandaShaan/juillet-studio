@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-const API_URL = "http://localhost:1337/api";
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 export const fetchProducts = async () => {
   try {
