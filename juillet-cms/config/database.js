@@ -95,13 +95,12 @@ module.exports = ({ env }) => ({
     client: env("DATABASE_CLIENT", "postgres"),
     connection: {
       host: env("DATABASE_HOST"),
-      port: env.int("DATABASE_PORT"),
+      port: env.int("DATABASE_PORT", 5432),
       database: env("DATABASE_NAME"),
       user: env("DATABASE_USERNAME"),
       password: env("DATABASE_PASSWORD"),
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      ssl: { rejectUnauthorized: false }, // For Supabase SSL
     },
+    debug: false,
   },
 });
