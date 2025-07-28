@@ -7,6 +7,7 @@ import { fetchCategories } from "@/app/lib/api";
 import { getTransformedProducts } from "@/app/lib/product";
 import { Availability } from "@/app/types/availability";
 import Image from "next/image";
+import { Product } from "@/app/types/product";
 
 type Props = {
   params: {
@@ -16,9 +17,18 @@ type Props = {
 
 export const revalidate = 60;
 
+type CategoryResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+  };
+};
+
 export async function generateStaticParams() {
-  const transformedCategories = await fetchCategories();
-  return transformedCategories.map((cat: any) => ({
+  const transformedCategories: CategoryResponse[] = await fetchCategories();
+
+  return transformedCategories.map((cat) => ({
     category: cat.attributes.slug,
   }));
 }
@@ -26,7 +36,7 @@ export async function generateStaticParams() {
 const Category = async ({ params }: Props) => {
   const currentPath = `/categories/${params.category}`;
   const category = params.category;
-  const transformedProducts = await getTransformedProducts();
+  const transformedProducts: Product[] = await getTransformedProducts();
 
   const filteredProducts =
     category === "all"
@@ -71,7 +81,6 @@ const Category = async ({ params }: Props) => {
                       className="cursor-pointer group"
                     >
                       <div>
-                        {/* Image */}
                         <div className="relative w-full pb-[100%] rounded-lg overflow-hidden">
                           <Image
                             src={firstImage}
@@ -81,7 +90,6 @@ const Category = async ({ params }: Props) => {
                             className="transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
-                        {/* Name and Price */}
                         <div className="mt-4 text-center">
                           <h3 className="text-lg font-semibold text-gray-800 mb-1">
                             {product.name}
@@ -93,7 +101,6 @@ const Category = async ({ params }: Props) => {
                       </div>
                     </Link>
 
-                    {/* Availability */}
                     <div className="text-center mt-auto">
                       {product.availability.toLowerCase() ===
                       Availability.InStock ? (
