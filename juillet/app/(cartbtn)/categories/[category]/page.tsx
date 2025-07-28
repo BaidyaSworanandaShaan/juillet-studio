@@ -11,7 +11,7 @@ import { Product } from "@/app/types/product";
 
 export const revalidate = 60;
 
-type CategoryResponse = {
+export type CategoryResponse = {
   id: number;
   attributes: {
     name: string;

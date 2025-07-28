@@ -2,7 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { fetchTransformedCategories } from "../lib/categories";
+import { CategoryResponse } from "../(cartbtn)/categories/[category]/page";
+import { fetchCategories } from "../lib/api";
+export const revalidate = 60;
+export async function generateStaticParams() {
+  const transformedCategories: CategoryResponse[] = await fetchCategories();
 
+  return transformedCategories.map((cat) => ({
+    category: cat.attributes.slug,
+  }));
+}
 export default async function ProductCategories() {
   const typedCategory = await fetchTransformedCategories();
   console.log(typedCategory);
