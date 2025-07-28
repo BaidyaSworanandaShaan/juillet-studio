@@ -10,38 +10,33 @@ type Props = {
     id: string;
   };
 };
+
 export const revalidate = 60;
+
 export async function generateStaticParams() {
-  const products = await fetchProducts(); // fetch all products to get IDs
+  const products = await fetchProducts();
 
   return products.map((product: any) => ({
     id: product.id.toString(),
   }));
 }
+
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
-const ProductPage = async ({
-  params,
-}: {
-  params: {
-    id: string;
-  };
-}) => {
+
+const ProductPage = async ({ params }: Props) => {
   const productId = parseInt(params.id);
   const product = await fetchProductById(productId);
 
   if (!product) {
     return <div className="p-4 text-red-600">Product not found</div>;
   }
+
   const { name, price, description, availability, images, category } =
     product.attributes;
 
   const imageUrls =
     images?.data?.map((img: any) => `${API_URL}${img.attributes.url}`) || [];
-
-  if (!product) {
-    return <div className="p-4 text-red-600">Product not found</div>;
-  }
 
   return (
     <>
@@ -59,7 +54,7 @@ const ProductPage = async ({
           {imageUrls.map((url, index) => (
             <div
               key={index}
-              className="relative w-64 h-60 mb-2 mx-auto md:mx-0 "
+              className="relative w-64 h-60 mb-2 mx-auto md:mx-0"
             >
               <Image
                 src={url}
@@ -70,7 +65,7 @@ const ProductPage = async ({
             </div>
           ))}
         </div>
-        <div className=" bg-white p-4  text-center md:text-left">
+        <div className="bg-white p-4 text-center md:text-left">
           <h1 className="text-2xl font-bold mb-4">{name}</h1>
           <p className="text-gray-600 mb-2">
             Category: {category?.data?.attributes?.name || "Uncategorized"}

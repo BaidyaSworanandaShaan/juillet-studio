@@ -1,4 +1,5 @@
 import SecondaryBanner from "../../../components/SecondaryBanner";
+import React from "react";
 import SideNav from "../../../components/SideNav";
 import Link from "next/link";
 import AddToCart from "../../../components/AddToCart";
@@ -8,23 +9,31 @@ import { Availability } from "@/app/types/availability";
 import Image from "next/image";
 import { Product } from "@/app/types/product";
 
+type CategoryPageProps = {
+  params: {
+    category: string;
+  };
+};
+
 export const revalidate = 60;
 
-export async function generateStaticParams() {
-  const transformedCategories = await fetchCategories();
+type CategoryResponse = {
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+  };
+};
 
-  return transformedCategories.map((cat: any) => ({
+export async function generateStaticParams() {
+  const transformedCategories: CategoryResponse[] = await fetchCategories();
+
+  return transformedCategories.map((cat) => ({
     category: cat.attributes.slug,
   }));
 }
 
-const Category = async ({
-  params,
-}: {
-  params: {
-    category: string;
-  };
-}) => {
+const CategoryPage = async ({ params }: CategoryPageProps) => {
   const currentPath = `/categories/${params.category}`;
   const category = params.category;
   const transformedProducts: Product[] = await getTransformedProducts();
@@ -77,8 +86,7 @@ const Category = async ({
                             src={firstImage}
                             alt={product.name}
                             fill
-                            style={{ objectFit: "cover" }}
-                            className="transition-transform duration-300 group-hover:scale-105"
+                            className="transition-transform duration-300 group-hover:scale-105 object-cover"
                           />
                         </div>
                         <div className="mt-4 text-center">
@@ -117,4 +125,4 @@ const Category = async ({
   );
 };
 
-export default Category;
+export default CategoryPage;
