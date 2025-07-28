@@ -33,7 +33,7 @@ export async function generateStaticParams() {
   }));
 }
 
-const Category = async ({ params }: Props) => {
+const Category = async ({ params }: Props): Promise<JSX.Element> => {
   const currentPath = `/categories/${params.category}`;
   const category = params.category;
   const transformedProducts: Product[] = await getTransformedProducts();
