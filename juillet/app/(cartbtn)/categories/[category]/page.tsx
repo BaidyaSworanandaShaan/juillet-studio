@@ -45,7 +45,7 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
           (product) =>
             product.category.toLowerCase().replace(" ", "-") === category
         );
-
+  console.log(filteredProducts);
   return (
     <div>
       <SecondaryBanner
@@ -101,7 +101,7 @@ const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
                     </Link>
 
                     <div className="text-center mt-auto">
-                      {product.availability.toLowerCase() ===
+                      {product?.availability.toLowerCase() ===
                       Availability.InStock ? (
                         <AddToCart product={product} />
                       ) : (
