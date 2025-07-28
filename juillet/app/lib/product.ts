@@ -16,8 +16,7 @@ export const getTransformedProducts = async (): Promise<ProductType[]> => {
       availability,
       category: category?.data?.attributes?.name || "",
       images:
-        images?.data?.map((img: any) => `${baseURL}${img.attributes.url}`) ||
-        [],
+        images?.data?.map((img) => `${baseURL}${img.attributes.url}`) || [],
     };
   });
 };

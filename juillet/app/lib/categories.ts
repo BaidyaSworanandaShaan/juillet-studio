@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Category as CategoryType } from "../types/category";
 import { fetchCategories } from "./api";
 const API_URL =
@@ -8,7 +7,7 @@ export const fetchTransformedCategories = async (): Promise<CategoryType[]> => {
   try {
     const categories = await fetchCategories();
 
-    return categories.map((cat: any) => ({
+    return categories.map((cat) => ({
       slug: cat.attributes.slug,
       label: cat.attributes.name,
       image: cat.attributes.image?.data?.attributes?.url

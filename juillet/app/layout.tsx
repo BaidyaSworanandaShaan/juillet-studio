@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { Raleway, Lora } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
-import FloatingCartButton from "./components/FloatingCartButton";
+
 import { OrderProvider } from "./context/OrderContext";
 
 const raleway = Raleway({
