@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Category as CategoryType } from "../types/category";
+
 import { fetchTransformedCategories } from "../lib/categories";
 
 type Props = {

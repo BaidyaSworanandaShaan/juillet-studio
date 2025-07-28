@@ -4,28 +4,30 @@ import SecondaryBanner from "../../../components/SecondaryBanner";
 import AddToCart from "../../../components/AddToCart";
 import { fetchProductById, fetchProducts } from "@/app/lib/api";
 import { Availability } from "@/app/types/availability";
+import { ImageData } from "@/app/types/imageData";
+import { RawProduct } from "@/app/types/rawProduct";
 
-type Props = {
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const products: RawProduct[] = await fetchProducts();
+
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
+}
+type PageProps = {
   params: {
     id: string;
   };
 };
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const products = await fetchProducts();
-
-  return products.map((product: any) => ({
-    id: product.id.toString(),
-  }));
-}
-
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
 
-const ProductPage = async ({ params }: Props) => {
-  const productId = parseInt(params.id);
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id);
   const product = await fetchProductById(productId);
 
   if (!product) {
@@ -36,7 +38,8 @@ const ProductPage = async ({ params }: Props) => {
     product.attributes;
 
   const imageUrls =
-    images?.data?.map((img: any) => `${API_URL}${img.attributes.url}`) || [];
+    images?.data?.map((img: ImageData) => `${API_URL}${img.attributes.url}`) ||
+    [];
 
   return (
     <>
@@ -51,7 +54,7 @@ const ProductPage = async ({ params }: Props) => {
       />
       <div className="flex mt-5 gap-5 flex-col align-center sm:flex-row">
         <div className="p-4">
-          {imageUrls.map((url, index) => (
+          {imageUrls.map((url: string, index: number) => (
             <div
               key={index}
               className="relative w-64 h-60 mb-2 mx-auto md:mx-0"
@@ -96,4 +99,4 @@ const ProductPage = async ({ params }: Props) => {
   );
 };
 
-export default ProductPage;
+export default Page;

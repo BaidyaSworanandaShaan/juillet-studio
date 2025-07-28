@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Category } from "../types/category";
 import { fetchTransformedCategories } from "../lib/categories";
 
 export default async function ProductCategories() {

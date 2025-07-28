@@ -3,9 +3,11 @@ import { fetchCategories } from "./api";
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
 
-export const fetchTransformedCategories = async (): Promise<CategoryType[]> => {
+export const fetchTransformedCategories = async (): Promise<
+  { slug: string; label: string; image: string }[]
+> => {
   try {
-    const categories = await fetchCategories();
+    const categories: CategoryType[] = await fetchCategories();
 
     return categories.map((cat) => ({
       slug: cat.attributes.slug,

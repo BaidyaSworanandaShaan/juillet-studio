@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
-import { CartItem } from "../types/cartitems";
-import { getTransformedProducts } from "../lib/product";
 import { Product } from "../types/product";
 
 type Props = {

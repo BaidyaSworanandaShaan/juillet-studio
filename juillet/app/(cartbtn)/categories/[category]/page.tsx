@@ -9,12 +9,6 @@ import { Availability } from "@/app/types/availability";
 import Image from "next/image";
 import { Product } from "@/app/types/product";
 
-type CategoryPageProps = {
-  params: {
-    category: string;
-  };
-};
-
 export const revalidate = 60;
 
 type CategoryResponse = {
@@ -24,6 +18,11 @@ type CategoryResponse = {
     slug: string;
   };
 };
+// type PageProps = {
+//   params: {
+//     category: string;
+//   };
+// };
 
 export async function generateStaticParams() {
   const transformedCategories: CategoryResponse[] = await fetchCategories();
@@ -33,9 +32,10 @@ export async function generateStaticParams() {
   }));
 }
 
-const CategoryPage = async ({ params }: CategoryPageProps) => {
-  const currentPath = `/categories/${params.category}`;
-  const category = params.category;
+const Page = async ({ params }: { params: Promise<{ category: string }> }) => {
+  const resolvedParams = await params;
+  const currentPath = `/categories/${resolvedParams.category}`;
+  const category = resolvedParams.category;
   const transformedProducts: Product[] = await getTransformedProducts();
 
   const filteredProducts =
@@ -125,4 +125,4 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   );
 };
 
-export default CategoryPage;
+export default Page;

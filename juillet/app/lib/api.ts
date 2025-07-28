@@ -25,7 +25,7 @@ export const fetchCategories = async () => {
 };
 
 // Order
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const createOrder = async (orderData: any) => {
   try {
     const res = await axios.post(`${API_URL}/orders`, {

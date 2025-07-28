@@ -1,5 +1,14 @@
 export type Category = {
-  slug: string;
-  label: string;
-  image: string;
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+    image?: {
+      data?: {
+        attributes: {
+          url: string;
+        };
+      };
+    };
+  };
 };
