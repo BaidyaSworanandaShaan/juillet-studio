@@ -18,7 +18,13 @@ export async function generateStaticParams() {
   }));
 }
 
-const Category = async ({ params }) => {
+const Category = async ({
+  params,
+}: {
+  params: {
+    category: string;
+  };
+}) => {
   const currentPath = `/categories/${params.category}`;
   const category = params.category;
   const transformedProducts: Product[] = await getTransformedProducts();

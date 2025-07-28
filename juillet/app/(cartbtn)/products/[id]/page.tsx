@@ -20,7 +20,13 @@ export async function generateStaticParams() {
 }
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
-const ProductPage = async ({ params }) => {
+const ProductPage = async ({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) => {
   const productId = parseInt(params.id);
   const product = await fetchProductById(productId);
 
