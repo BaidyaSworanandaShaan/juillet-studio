@@ -13,7 +13,7 @@ export const fetchTransformedCategories = async (): Promise<
       slug: cat.attributes.slug,
       label: cat.attributes.name,
       image: cat.attributes.image?.data?.attributes?.url
-        ? `${API_URL}${cat.attributes.image.data.attributes.url}`
+        ? `${cat.attributes.image.data.attributes.url}`
         : "",
     }));
   } catch (error) {

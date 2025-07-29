@@ -6,6 +6,7 @@ import Image from "next/image";
 
 const ProductList = async () => {
   const typedProducts = await getTransformedProducts();
+  console.log("TP", typedProducts);
   return (
     <div>
       <div className="flex items-center justify-center flex-col  w-full pb-40">
