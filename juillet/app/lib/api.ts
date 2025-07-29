@@ -3,13 +3,12 @@ import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 export const fetchProducts = async () => {
-  try {
-    const res = await axios.get(`${API_URL}/api/products?populate=*`);
-    return res.data.data;
-  } catch (err) {
-    console.error("Error fetching products:", err);
-    return [];
-  }
+  const res = await fetch(`${API_URL}/api/products?populate=*`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) throw new Error("Failed to fetch products");
+  const data = await res.json();
+  return data.data;
 };
 export const fetchProductById = async (id: string | number) => {
   const res = await axios.get(`${API_URL}/api/products/${id}?populate=*`);

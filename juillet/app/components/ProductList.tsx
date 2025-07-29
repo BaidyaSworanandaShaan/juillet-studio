@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { getTransformedProducts } from "../lib/product";
 import Image from "next/image";
-export const revalidate = 60;
+
 const ProductList = async () => {
   const typedProducts = await getTransformedProducts();
   return (
