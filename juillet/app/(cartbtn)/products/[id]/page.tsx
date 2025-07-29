@@ -41,6 +41,16 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     images?.data?.map((img: ImageData) => `${API_URL}${img.attributes.url}`) ||
     [];
 
+  const cartData = {
+    id: productId,
+    name,
+    price,
+    description,
+    availability,
+    images: imageUrls,
+    category: category?.data?.attributes?.name,
+  };
+
   return (
     <>
       <SecondaryBanner
@@ -91,7 +101,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               : "Out of Stock"}
           </p>
           {availability.toLowerCase() === Availability.InStock && (
-            <AddToCart product={product} />
+            <AddToCart product={cartData} />
           )}
         </div>
       </div>

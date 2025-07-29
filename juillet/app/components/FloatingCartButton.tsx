@@ -8,6 +8,7 @@ import Image from "next/image";
 
 export default function FloatingCartButton() {
   const { cartItems, setCartItems } = useCart();
+  console.log(cartItems);
   const [isOpen, setIsOpen] = useState(false);
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -74,59 +75,67 @@ export default function FloatingCartButton() {
               <p>Your cart is empty.</p>
             ) : (
               <ul>
-                {cartItems.map((item) => (
-                  <li key={item.id} className="mb-3 border-b pb-2">
-                    <div className="flex gap-4 items-center">
-                      {" "}
-                      <div className="w-[100px] h-[100px] relative overflow-hidden rounded">
-                        <Image
-                          src={item.images[0]}
-                          alt={item.name}
-                          fill // makes the image fill the parent div
-                          className="object-cover rounded"
-                        />
-                      </div>
-                      <div className="content">
-                        <p className="font-semibold">{item.name}</p>{" "}
-                        <div className="my-2">
-                          <button
-                            onClick={() => {
-                              handleProductQuantityFromCart(
-                                item.id,
-                                actionType.DECREMENT
-                              );
-                            }}
-                            className="bg-gray-300 px-2 py-1 text-black rounded"
-                          >
-                            −
-                          </button>
-                          <span className="mx-2 ">{item.quantity}</span>
-                          <button
-                            onClick={() => {
-                              handleProductQuantityFromCart(
-                                item.id,
-                                actionType.INCREMENT
-                              );
-                            }}
-                            className="bg-gray-300 px-2 py-1 text-black rounded"
-                          >
-                            +
-                          </button>
+                {cartItems.map((item) => {
+                  console.log("Cart item:", item);
+                  return (
+                    <li key={item.id} className="mb-3 border-b pb-2">
+                      <div className="flex gap-4 items-center">
+                        <div className="w-[100px] h-[100px] relative overflow-hidden rounded">
+                          {item.images?.[0] ? (
+                            <Image
+                              src={item.images[0]}
+                              alt={item.name}
+                              fill
+                              className="object-cover rounded"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">
+                              No Image
+                            </div>
+                          )}
+                        </div>
+                        <div className="content">
+                          <p className="font-semibold">{item.name}</p>
+                          <div className="my-2">
+                            <button
+                              onClick={() => {
+                                handleProductQuantityFromCart(
+                                  item.id,
+                                  actionType.DECREMENT
+                                );
+                              }}
+                              className="bg-gray-300 px-2 py-1 text-black rounded"
+                            >
+                              −
+                            </button>
+                            <span className="mx-2">{item.quantity}</span>
+                            <button
+                              onClick={() => {
+                                handleProductQuantityFromCart(
+                                  item.id,
+                                  actionType.INCREMENT
+                                );
+                              }}
+                              className="bg-gray-300 px-2 py-1 text-black rounded"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <p className="mt-4 font-bold">
-                      Price: Rs. {item.price} * {item.quantity} = Rs.
-                      {item.price * item.quantity}{" "}
-                    </p>{" "}
-                    <button
-                      className="cart-item-delete bg-red-700 p-2 text-white rounded-md border-none block mt-2 bold"
-                      onClick={() => removeFromCart(item.id)}
-                    >
-                      Remove
-                    </button>
-                  </li>
-                ))}
+                      <p className="mt-4 font-bold">
+                        Price: Rs. {item.price} * {item.quantity} = Rs.{" "}
+                        {item.price * item.quantity}
+                      </p>
+                      <button
+                        className="cart-item-delete bg-red-700 p-2 text-white rounded-md border-none block mt-2 font-bold"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  );
+                })}
 
                 <li className="font-bold">Total Quantity: {totalQuantity} </li>
                 <li className="font-bold">Total Price: Rs. {totalPrice}</li>

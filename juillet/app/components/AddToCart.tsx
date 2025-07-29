@@ -12,6 +12,7 @@ export enum actionType {
 }
 
 const AddToCart = ({ product }: Props) => {
+  console.log(product);
   const { cartItems, setCartItems } = useCart();
 
   const [quantity, setQuantity] = useState<number>(1);
