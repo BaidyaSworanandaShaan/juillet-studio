@@ -3,8 +3,6 @@ import Link from "next/link";
 
 import { fetchTransformedCategories } from "../lib/categories";
 
-export const revalidate = 60;
-
 export default async function ProductCategories() {
   const typedCategory = await fetchTransformedCategories();
   console.log(typedCategory);

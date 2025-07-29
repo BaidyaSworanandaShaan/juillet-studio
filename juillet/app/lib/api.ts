@@ -19,9 +19,14 @@ export const fetchProductById = async (id: string | number) => {
 //Categories
 
 export const fetchCategories = async () => {
-  const res = await axios.get(`${API_URL}/api/categories?populate=*`);
+  const res = await fetch(`${API_URL}/api/categories?populate=*`, {
+    next: { revalidate: 60 },
+  });
 
-  return res.data.data;
+  if (!res.ok) throw new Error("Failed to fetch categories");
+
+  const data = await res.json();
+  return data.data;
 };
 
 // Order
