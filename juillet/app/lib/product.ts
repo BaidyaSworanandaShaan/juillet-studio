@@ -21,7 +21,7 @@ export const getTransformedProducts = async (): Promise<ProductType[]> => {
       images:
         images?.data?.map((img: unknown) => {
           const image = img as { attributes: { url: string } };
-          return `${baseURL}${image.attributes.url}`;
+          return `${image.attributes.url}`;
         }) || [],
     };
   });

@@ -38,8 +38,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     product.attributes;
 
   const imageUrls =
-    images?.data?.map((img: ImageData) => `${API_URL}${img.attributes.url}`) ||
-    [];
+    images?.data?.map((img: ImageData) => img.attributes.url) || [];
 
   const cartData = {
     id: productId,
